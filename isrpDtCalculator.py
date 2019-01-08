@@ -5,19 +5,19 @@ sensors = isrpLoadSensorParameters('rogerpass','D:/software/isrpDtCalculator')
 
 demFilename = 'dem/rogerpass/rogerpass-ritaglio.asc'
 sRes=150
-dMin=100
+dMin=0
 dMax=20000
 fig = plt.figure(num=1,figsize=(12, 8))
 
 ax1 = fig.add_subplot(121)
-xdem, ydem, zdem = isrpLoadDem(demFilename,sensors,3000)
-plt.contourf(xdem,ydem, zdem, cmap="gray",levels=list(range(0, 3000, 60)))
+xdem, ydem, zdem = isrpLoadDem(demFilename,sensors,4000)
+plt.contourf(xdem,ydem, zdem, cmap="gray",levels=list(range(0, 5000, 60)))
 plt.title("Elevation Contours ")
 cbar = plt.colorbar(orientation="horizontal")
 plt.gca().set_aspect('equal', adjustable='box')
 lineMap, = plt.plot(np.nan,np.nan, linestyle='dashed', linewidth=1, color='b')
 ax1.plot(sensors['X'][7], sensors['Y'][7], marker='*', color='r', markersize=12)
-ax1.plot(sensors['X'][0], sensors['Y'][0], marker='*', color='r', markersize=12)
+ax1.plot(sensors['X'][0], sensors['Y'][0], marker='*', color='b', markersize=12)
 ax2 = fig.add_subplot(122)
 lineProfile, = plt.plot(0, 0, linewidth=1, color='b')
 lineSound, = plt.plot(0, 0,marker='o', markersize=6, linestyle='dashed', linewidth=1, color='r')
@@ -27,7 +27,7 @@ plt.grid(color='k', linestyle='-', linewidth=.1)
 plt.draw()
 plt.pause(0.1)
 
-#dT=isrpDemTravelDt(demFilename,xdem,ydem,zdem,sensors,sRes,dMin,dMax)
+dT=isrpDemTravelDt(demFilename,xdem,ydem,zdem,sensors,sRes,dMin,dMax)
 loadT=np.load(demFilename+'dT.npZ')
 dT=loadT['dT']
 T=loadT['T']
@@ -42,19 +42,19 @@ corrM=np.array([[1, 1, 1, 1, 0, 0, 0, 0],
                [0, 0, 0, 0, 1, 1, 1, 1],
                [0, 0, 0, 0, 1, 1, 1, 1]])
 
-#dMap=isrpArrange(demFilename,-dT,T,sensors,sRes,50/340)
+dMap=isrpArrange(demFilename,-dT,T,sensors,sRes,50/340)
 
 fig = plt.figure(num=2,figsize=(12, 8))
-aa=T[1,:,:].T
+aa=dT[1,2,:,:].T
 plt.subplot(2,2,1)
 plt.imshow(aa)
-aa=T[2,:,:].T
+aa=dT[3,2,:,:].T
 plt.subplot(2,2,2)
 plt.imshow(aa)
-aa=T[6,:,:].T
+aa=dT[7,6,:,:].T
 plt.subplot(2,2,3)
 plt.imshow(aa)
-aa=T[7,:,:].T
+aa=dT[7,8,:,:].T
 plt.subplot(2,2,4)
 plt.imshow(aa)
 plt.colorbar()

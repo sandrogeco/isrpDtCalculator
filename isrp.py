@@ -233,11 +233,11 @@ def isrpTravelTimesComput(x0, y0, xS, yS, x1, y1, xdem ,ydem ,zdem,sRes,dMin,dMa
 
     # print("dPlane"+str(dPlane))
     #print("dtopo "+str(dTopo))
-    return np.int32(tT)
+    return tT
 
 
 def isrpParallelDemTravelDt(i,xdem, ydem, zdem, sensors:sensorsType,sRes,dMin,dMax):
-    tT = np.zeros(( len(xdem), len(ydem)),dtype=np.int32)
+    tT = np.zeros(( len(xdem), len(ydem)),dtype=np.float16)
 
     dx = xdem[1] - xdem[0]
     dy = ydem[1] - ydem[0]
@@ -267,8 +267,8 @@ def isrpParallelDemTravelDt(i,xdem, ydem, zdem, sensors:sensorsType,sRes,dMin,dM
 
 def isrpDemTravelDt(demFilename, xdem, ydem, zdem, sensors:sensorsType,sRes, dMin,dMax):
 
-    dT=np.zeros((len(sensors), len(sensors), len(xdem), len(ydem)),dtype=np.int32)
-    T = np.zeros((len(sensors), len(xdem), len(ydem)),dtype=np.int32)
+    dT=np.zeros((len(sensors), len(sensors), len(xdem), len(ydem)),dtype=np.float16)
+    T = np.zeros((len(sensors), len(xdem), len(ydem)),dtype=np.float16)
 
     num_cores = multiprocessing.cpu_count()
 
