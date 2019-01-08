@@ -1,7 +1,7 @@
 
 from isrp import *
 
-sensors = isrpLoadSensorParameters('rogerpass','D:/python/isrpDtCalculator')
+sensors = isrpLoadSensorParameters('rogerpass','D:/software/isrpDtCalculator')
 
 demFilename = 'dem/rogerpass/rogerpass-ritaglio.asc'
 sRes=150
@@ -27,7 +27,7 @@ plt.grid(color='k', linestyle='-', linewidth=.1)
 plt.draw()
 plt.pause(0.1)
 
-dT=isrpDemTravelDt(demFilename,xdem,ydem,zdem,sensors,sRes,dMin,dMax)
+#dT=isrpDemTravelDt(demFilename,xdem,ydem,zdem,sensors,sRes,dMin,dMax)
 loadT=np.load(demFilename+'dT.npZ')
 dT=loadT['dT']
 T=loadT['T']
