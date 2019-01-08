@@ -309,7 +309,7 @@ def isrpArrange (demFileName,dT,T,sensors,shift,sToSFactor):
 
     for i in range(0, len(sensors)):
         dj = []
-        for j in range(0, int(np.nanmax(S)),sShift):
+        for j in range(0, int(np.nanmax(S)),int(np.nanmax(S)/sShift)):
             print("isprArrange Elaborating T " + str(j))
             dj.append(np.where((S[i, :, :] >= j) & (S[i, :, :] < j + sShift)))
         sMap.append(dj)

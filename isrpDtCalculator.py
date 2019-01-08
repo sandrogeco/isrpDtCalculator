@@ -27,7 +27,7 @@ plt.grid(color='k', linestyle='-', linewidth=.1)
 plt.draw()
 plt.pause(0.1)
 
-dT=isrpDemTravelDt(demFilename,xdem,ydem,zdem,sensors,sRes,dMin,dMax)
+#dT=isrpDemTravelDt(demFilename,xdem,ydem,zdem,sensors,sRes,dMin,dMax)
 loadT=np.load(demFilename+'dT.npZ')
 dT=loadT['dT']
 T=loadT['T']
@@ -45,16 +45,16 @@ corrM=np.array([[1, 1, 1, 1, 0, 0, 0, 0],
 dMap=isrpArrange(demFilename,-dT,T,sensors,sRes,50/340)
 
 fig = plt.figure(num=2,figsize=(12, 8))
-aa=dT[1,2,:,:].T
+aa=np.float64(dT[1,2,:,:].T)
 plt.subplot(2,2,1)
 plt.imshow(aa)
-aa=dT[3,2,:,:].T
+aa=np.float64(dT[3,2,:,:].T)
 plt.subplot(2,2,2)
 plt.imshow(aa)
-aa=dT[7,6,:,:].T
+aa=np.float64(dT[7,6,:,:].T)
 plt.subplot(2,2,3)
 plt.imshow(aa)
-aa=dT[7,8,:,:].T
+aa=np.float64(dT[7,8,:,:].T)
 plt.subplot(2,2,4)
 plt.imshow(aa)
 plt.colorbar()
