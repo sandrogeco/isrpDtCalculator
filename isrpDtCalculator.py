@@ -5,6 +5,7 @@ sensors = isrpLoadSensorParameters('rogerpass','D:/software/isrpDtCalculator')
 
 demFilename = 'dem/rogerpass/rogerpass-ritaglio.asc'
 sRes=150
+sRes1=150
 dMin=0
 dMax=20000
 fig = plt.figure(num=1,figsize=(12, 8))
@@ -42,7 +43,7 @@ corrM=np.array([[1, 1, 1, 1, 0, 0, 0, 0],
                [0, 0, 0, 0, 1, 1, 1, 1],
                [0, 0, 0, 0, 1, 1, 1, 1]])
 
-dMap=isrpArrange(demFilename,-dT,T,sensors,sRes,50/340)
+dMap=isrpArrange2(demFilename,-dT,T,sensors,sRes1,30,50/340)
 
 fig = plt.figure(num=2,figsize=(12, 8))
 aa=np.float64(dT[1,2,:,:].T)
