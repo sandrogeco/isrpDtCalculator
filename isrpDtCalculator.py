@@ -43,7 +43,7 @@ corrM=np.array([[1, 1, 1, 1, 0, 0, 0, 0],
                [0, 0, 0, 0, 1, 1, 1, 1],
                [0, 0, 0, 0, 1, 1, 1, 1]])
 
-dMap=isrpArrange(demFilename,-dT,T,sensors,sRes1,50/340)
+dMap=isrpArrange2(demFilename,-dT,T,sensors,sRes1,50/340)
 
 fig = plt.figure(num=2,figsize=(12, 8))
 aa=np.float64(dT[1,2,:,:].T)

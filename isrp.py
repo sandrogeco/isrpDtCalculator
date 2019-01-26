@@ -322,9 +322,11 @@ def isrpArrange (demFileName,dT,T,sensors,shift,sToSFactor):
     return dMap, sMap
 
 
-def isrpArrange2 (demFileName,dT,T,sensors,shift,defCorr,sToSFactor):
+
+def isrpArrange2 (demFileName,dT,T,sensors,shift,wnd,sToSFactor):
     dS = dT * sToSFactor
     S = T * sToSFactor
+    sWnd=wnd*sToSFactor
     sShift=int(shift*sToSFactor)
     dMap=[]
     sMap=[]
@@ -332,19 +334,11 @@ def isrpArrange2 (demFileName,dT,T,sensors,shift,defCorr,sToSFactor):
     dsMax = np.nanmax(dS)
     step = int(np.nanmax(S) / sShift)
     for i in range(0, len(sensors)):
-        dii = []
-        for ii in range(i+1, len(sensors)):
-            print("isprArrange Elaborating T " + str(i))
-            di=[]
-            for j in range(0, int(np.nanmax(S)), step):
-                dit = []
-                for k in range(int(-defCorr - 1), int(defCorr + 1)):
-                    dit.append(np.where((S[i, :, :] >= j) & (S[i, :, :] < j + step) & (dS[i,ii,:,:] >= k) & (dS[i,ii,:,:]< k+1)))
-                    print(np.where((S[i, :, :] >= j) & (S[i, :, :] < j + step) & (dS[i, ii, :, :] >= k) & (dS[i, ii, :, :] < k + 1)))
-                    print(k)
-                di.append(dit)
-            dii.append(di)
-        sMap.append(dii)
+        dj = []
+        for j in range(-sWnd+sShift, int(np.nanmax(S)), step):
+            print("isprArrange Elaborating T " + str(j))
+            dj.append(np.where((S[i, :, :] >= j) & (S[i, :, :] < j + sWnd)))
+        sMap.append(dj)
 
     for i in range(0,len(sensors)):
         dii=[]
@@ -363,7 +357,6 @@ def isrpArrange2 (demFileName,dT,T,sensors,shift,defCorr,sToSFactor):
 
     np.savez(demFileName + 'dMap', dMap=dMap,sMap=sMap,minCorr=dsMin,maxCorr=dsMax, sShift=sShift)
     return dMap, sMap
-
 
 
 def isrpGetWyData(sensors,ti_str,tf_str):
