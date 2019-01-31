@@ -326,17 +326,18 @@ def isrpArrange (demFileName,dT,T,sensors,shift,sToSFactor):
 def isrpArrange2 (demFileName,dT,T,sensors,shift,wnd,sToSFactor):
     dS = dT * sToSFactor
     S = T * sToSFactor
-    sWnd=wnd*sToSFactor
+    sWnd=int(wnd*sToSFactor)
     sShift=int(shift*sToSFactor)
     dMap=[]
     sMap=[]
     dsMin = np.nanmin(dS)
     dsMax = np.nanmax(dS)
-    step = int(np.nanmax(S) / sShift)
+    step = int((1+int(np.nanmax(S)/sWnd))*sWnd / sShift)
     for i in range(0, len(sensors)):
         dj = []
         for j in range(-sWnd+sShift, int(np.nanmax(S)), step):
             print("isprArrange Elaborating T " + str(j))
+
             dj.append(np.where((S[i, :, :] >= j) & (S[i, :, :] < j + sWnd)))
         sMap.append(dj)
 
