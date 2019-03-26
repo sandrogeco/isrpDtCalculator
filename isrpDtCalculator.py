@@ -1,9 +1,9 @@
 
 from isrp import *
 
-sensors = isrpLoadSensorParameters('rogerpass','D:/software/isrpDtCalculator')
+sensors = isrpLoadSensorParameters('goms','D:/software/isrpDtCalculator')
 
-demFilename = 'dem/rogerpass/rogerpass-ritaglio.asc'
+demFilename = 'dem/goms/Goms.asc' #rogerpass-ritaglio.asc'
 sRes=150
 sRes1=170
 dMin=0
@@ -28,7 +28,7 @@ plt.grid(color='k', linestyle='-', linewidth=.1)
 plt.draw()
 plt.pause(0.1)
 
-#dT=isrpDemTravelDt(demFilename,xdem,ydem,zdem,sensors,sRes,dMin,dMax)
+dT=isrpDemTravelDt(demFilename,xdem,ydem,zdem,sensors,sRes,dMin,dMax)
 loadT=np.load(demFilename+'dT.npZ')
 dT=loadT['dT']
 T=loadT['T']
@@ -43,7 +43,7 @@ corrM=np.array([[1, 1, 1, 1, 0, 0, 0, 0],
                [0, 0, 0, 0, 1, 1, 1, 1],
                [0, 0, 0, 0, 1, 1, 1, 1]])
 
-dMap=isrpArrange2(demFilename,-dT,T,sensors,sRes1,1700,50/340)
+dMap=isrpArrange2(demFilename,-dT,T,sensors,sRes1,170,50/340)
 
 fig = plt.figure(num=2,figsize=(12, 8))
 aa=np.float64(dT[1,2,:,:].T)

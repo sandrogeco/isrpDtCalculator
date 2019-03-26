@@ -86,7 +86,7 @@ def isrpLoadDem(demFilename,sensors,iRange):
     info['yllcorner'] = float(s[1])
     s = hdr[4].split()
     info['dx'] = float(s[1])
-  #  s = hdr[5].split()
+   # s = hdr[5].split()
     info['dy'] = float(s[1])
 
     xllcu, yllcu, zonen, zonel = utm.from_latlon(info['yllcorner'], info['xllcorner'])
@@ -333,9 +333,10 @@ def isrpArrange2 (demFileName,dT,T,sensors,shift,wnd,sToSFactor):
     dsMin = np.nanmin(dS)
     dsMax = np.nanmax(dS)
     step = int((1+int(np.nanmax(S)/sWnd))*sWnd / sShift)
+    jMax=sShift*step
     for i in range(0, len(sensors)):
         dj = []
-        for j in range(-sWnd+sShift, int(np.nanmax(S)), step):
+        for j in range(-sWnd+sShift, jMax,sShift):
             print("isprArrange Elaborating T " + str(j))
 
             dj.append(np.where((S[i, :, :] >= j) & (S[i, :, :] < j + sWnd)))
