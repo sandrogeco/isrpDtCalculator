@@ -42,6 +42,7 @@ def isrpLoadSensorParameters(network,path):
     modname = 'stationparameters'
     path_config =path+'/configfiles/'+network+'/'
     listOfFiles = os.listdir(path_config)
+    listOfFiles.sort()
     pattern = "*.txt"
 
     i = 0
@@ -287,8 +288,8 @@ def isrpDemTravelDt(demFilename, xdem, ydem, zdem, sensors:sensorsType,sRes, dMi
     return dT
 
 
-def isrpArrange (demFileName,dT,T,sensors,shift,sToSFactor):
-    dS = dT * sToSFactor
+def isrpArrange (demFileName,dT,T,sensors,shift,sToSFactor,rs):
+    dS = dT * sToSFactor*rs
     S = T * sToSFactor
     sShift=int(shift*sToSFactor)
     dMap=[]
@@ -323,16 +324,16 @@ def isrpArrange (demFileName,dT,T,sensors,shift,sToSFactor):
 
 
 
-def isrpArrange2 (demFileName,dT,T,sensors,shift,wnd,sToSFactor):
+def isrpArrange2 (demFileName,dT,T,sensors,sShift,swnd,sToSFactor):
     dS = dT * sToSFactor
     S = T * sToSFactor
-    sWnd=int(wnd*sToSFactor)
-    sShift=int(shift*sToSFactor)
+    #sWnd=int(wnd*sToSFactor)
+    #sShift=int(shift*sToSFactor)
     dMap=[]
     sMap=[]
     dsMin = np.nanmin(dS)
     dsMax = np.nanmax(dS)
-    step = int((1+int(np.nanmax(S)/sWnd))*sWnd / sShift)
+    step = 1+int((1+int(np.nanmax(S)/sWnd))*sWnd / sShift)
     jMax=sShift*step
     for i in range(0, len(sensors)):
         dj = []
